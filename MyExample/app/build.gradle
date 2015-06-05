@@ -1,13 +1,15 @@
-apply plugin: 'com.android.application'
+apply plugin:'com.android.application'
+apply plugin:'android-apt'
+def AAVersion = '3.2+'
 
 android {
-    compileSdkVersion 17
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 22
+    buildToolsVersion '22.0.1'
 
     defaultConfig {
         applicationId "lico.example"
-        minSdkVersion 17
-        targetSdkVersion 19
+        minSdkVersion 9
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
     }
@@ -21,4 +23,16 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    apt "org.androidannotations:androidannotations:$AAVersion"
+    compile "org.androidannotations:androidannotations-api:$AAVersion"
+    compile 'com.android.support:support-v4:22.2.0'
+    compile 'com.android.support:appcompat-v7:22.2.0'
+    compile 'com.android.support:design:22.2.0'
+}
+
+apt {
+    arguments {
+        androidManifestFile variant.outputs[0].processResources.manifestFile
+        resourcePackageName "lico.example"
+    }
 }
